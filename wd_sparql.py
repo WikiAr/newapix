@@ -44,7 +44,8 @@ def get_query_data(query):
     try:
         data = sparql.query().convert()
     except Exception as e:
-        exception_err(e, text=f"API/tools.py quoteurl: Exception: {e}")
+        # exception_err(e, text=f"API/tools.py quoteurl: Exception: {e}")
+        print("API/tools.py get_query_data: Exception: e" )
     # ---
     return data
 

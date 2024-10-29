@@ -76,7 +76,7 @@ class MwClientSite:
                 self.jar_cookie.load(ignore_discard=True, ignore_expires=True)
                 self.connection.cookies = self.jar_cookie  # Tell Requests session to use the cookiejar.
             except Exception as e:
-                printe.error("Could not load cookies: %s" % e)
+                printe.output("Could not load cookies: %s" % e)
 
     def __initialize_site(self):
         self.domain = f"{self.lang}.{self.family}.org"
@@ -87,7 +87,7 @@ class MwClientSite:
             try:
                 self.site_mwclient = Site(self.domain, clients_useragent=self.user_agent, pool=self.connection, force_login=self.force_login)
             except Exception as e:
-                printe.error(f"Could not connect to ({self.domain}): %s" % e)
+                printe.output(f"Could not connect to ({self.domain}): %s" % e)
                 return False
 
     def do_login(self):
@@ -95,7 +95,7 @@ class MwClientSite:
             return
 
         if not self.site_mwclient:
-            printe.error(f"no self.ssite_mwclient to ({self.domain})")
+            printe.output(f"no self.ssite_mwclient to ({self.domain})")
             return
 
         if not self.site_mwclient.logged_in:
@@ -104,7 +104,7 @@ class MwClientSite:
             try:
                 self.site_mwclient.login(username=self.username, password=self.password)
             except Exception as e:
-                printe.error(f"Could not login to ({self.domain}): %s" % e)
+                printe.output(f"Could not login to ({self.domain}): %s" % e)
 
             if self.site_mwclient.logged_in:
                 printe.output(f"<<purple>>logged in as {self.site_mwclient.username} to ({self.domain})")
@@ -162,7 +162,7 @@ class LOGIN_HELPS(MwClientSite, PARAMS_HELPS):
         try:
             csrftoken = self.site_mwclient.get_token("csrf")
         except Exception as e:
-            printe.error("Could not get token: %s" % e)
+            printe.output("Could not get token: %s" % e)
             return False
         # ---
         return csrftoken
