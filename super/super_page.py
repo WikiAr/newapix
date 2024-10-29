@@ -70,13 +70,13 @@ not_loged_m = {1: ""}
 Save_Edit_Pages = {1: False}
 # ---
 change_codes = {
-    "nb": "no",
     "bat_smg": "bat-smg",
-    "be_x_old": "be-tarask",
     "be-x-old": "be-tarask",
+    "be_x_old": "be-tarask",
     "cbk_zam": "cbk-zam",
     "fiu_vro": "fiu-vro",
     "map_bms": "map-bms",
+    "nb": "no",
     "nds_nl": "nds-nl",
     "roa_rup": "roa-rup",
     "zh_classical": "zh-classical",

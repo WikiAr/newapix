@@ -65,6 +65,7 @@ def bot_May_Edit(text='', title_page='', botjob='all'):
                 # {{nobots}}                منع جميع البوتات
                 # منع جميع البوتات
                 if not params:
+                    printe.output(f'<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.')
                     # pywikibot.output( 'return False 2 ' )
                     Bot_Cash[botjob][title_page] = False
                     return False
@@ -72,6 +73,7 @@ def bot_May_Edit(text='', title_page='', botjob='all'):
                     List = [x.strip() for x in params.get('1', '').split(',')]
                     # if 'all' in List or pywikibot.calledModuleName() in List or edit_username[1] in List:
                     if 'all' in List or edit_username[1] in List:
+                        printe.output(f'<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.')
                         # pywikibot.output( 'return False 3 ' )
                         Bot_Cash[title_page] = False
                         return False
