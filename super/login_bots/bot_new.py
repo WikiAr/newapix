@@ -120,6 +120,10 @@ class MwClientSite:
         # ---
         del params["action"]
         # ---
+        if not self.site_mwclient:
+            printe.output(f"no self.ssite_mwclient to ({self.domain})")
+            self.__initialize_site()
+        # ---
         if "dopost" in sys.argv:
             r4 = self.site_mwclient.api(action, http_method=method, **params)
             return r4

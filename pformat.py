@@ -1,5 +1,5 @@
 """
- python3 core8/pwb.py newapi/pformat 
+python3 core8/pwb.py newapi/pformat 
 """
 import sys
 import wikitextparser as wtp
