@@ -217,7 +217,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
         # ---
         # print(json1)
         # ---
-        if "anon" in userinfo:
+        if "anon" in userinfo or "temp" in userinfo:
             return False
         # ---
         self.username_in = userinfo.get("name", "")
