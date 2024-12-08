@@ -78,7 +78,7 @@ class HANDEL_ERRORS:
         if do_error:
             params['data'] = {}
             params['text'] = {}
-            printe.output(f"<<lightred>>{function} ERROR: <<defaut>>info: {err_info}, {params=}")
+            printe.error(f"<<lightred>>{function} ERROR: <<defaut>>info: {err_info}, {params=}")
         # ---
         if "raise" in sys.argv:
             raise Exception(error)
