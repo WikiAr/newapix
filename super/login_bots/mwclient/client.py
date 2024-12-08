@@ -389,7 +389,7 @@ class Site:
         else:
             self.blocked = False
         self.hasmsg = 'messages' in userinfo
-        self.logged_in = 'anon' not in userinfo
+        self.logged_in = 'anon' not in userinfo and 'temp' not in userinfo
         if 'warnings' in info:
             for module, warning in info['warnings'].items():
                 if '*' in warning:

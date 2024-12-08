@@ -57,6 +57,10 @@ super_page.User_tables["wikipedia"] = User_tables
 bot_api.User_tables["wikipedia"] = User_tables
 catdepth_new.User_tables["wikipedia"] = User_tables
 # ---
+super_page.User_tables["wikisource"] = User_tables
+bot_api.User_tables["wikisource"] = User_tables
+catdepth_new.User_tables["wikisource"] = User_tables
+# ---
 super_page.User_tables["wikidata"] = User_tables
 bot_api.User_tables["wikidata"] = User_tables
 catdepth_new.User_tables["wikidata"] = User_tables
