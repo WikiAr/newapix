@@ -123,7 +123,7 @@ class Login(LOGIN_HELPS, HANDEL_ERRORS):
         if self.family == "nccommons" and params.get("bot"):
             del params["bot"]
 
-        if "workibrahem" in sys.argv:
+        if "workibrahem" in sys.argv and "ibrahemsummary" not in sys.argv and params.get("summary", "").find("بوت:") != -1:
             params["summary"] = ""
 
         if params["action"] in ["query"]:
