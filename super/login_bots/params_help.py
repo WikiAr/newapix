@@ -13,7 +13,7 @@ class PARAMS_HELPS:
         pass
 
     def params_w(self, params) -> dict:
-        if self.family == "wikipedia" and self.lang == "ar" and params.get("summary") and self.username.find("bot") == -1:
+        if self.family == "wikipedia" and self.lang == "ar" and params.get("summary") and self.username.find("bot") == -1 and "ibrahemsummary" not in sys.argv:
             params["summary"] = ""
 
         self.Bot_or_himo = 1 if "bot" in self.username else 0
