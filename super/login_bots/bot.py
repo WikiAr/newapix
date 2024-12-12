@@ -258,6 +258,10 @@ class LOGIN_HELPS(PARAMS_HELPS):
         if loged_t:
             self.cookie_jar.save(ignore_discard=True, ignore_expires=True)
 
+    def _handle_server_error(self, req0):
+        if req0 and req0.status_code and not str(req0.status_code).startswith("2"):
+            printe.output(f"<<red>> newapi {req0.status_code} Server Error: Server Hangup for url: {self.endpoint}")
+
     def post_it_2(self, params, files=None, timeout=30) -> any or None:
         """Send a POST request to a specified endpoint with given parameters and
         files.
@@ -309,8 +313,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
             printe.output("<<green>> :::dopost")
             req0 = seasons_by_lang[self.sea_key].request("POST", self.endpoint, **args)
             # ---
-            if req0 and req0.status_code and not str(req0.status_code).startswith("2"):
-                printe.output(f"<<red>> newapi {req0.status_code} Server Error: Server Hangup for url: {self.endpoint}")
+            self._handle_server_error(req0)
             # ---
             return req0
         # ---
@@ -325,8 +328,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
         except Exception as e:
             exception_err(e)
         # ---
-        if req0 and req0.status_code and not str(req0.status_code).startswith("2"):
-            printe.output(f"<<red>> newapi {req0.status_code} Server Error: Server Hangup for url: {self.endpoint}")
+        self._handle_server_error(req0)
         # ---
         return req0
 
