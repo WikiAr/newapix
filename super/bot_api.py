@@ -349,13 +349,13 @@ class NEW_API(Login, BOTS_APIS):
         # ---
         return results
 
-    def Get_Newpages(self, limit=5000, namespace="0", rcstart="", user="", three_houers=False, offset_hours=False):
+    def Get_Newpages(self, limit=5000, namespace="0", rcstart="", user="", three_houers=False, offset_minutes=False):
         if three_houers:
             dd = datetime.datetime.utcnow() - timedelta(hours=3)
             rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
 
-        elif offset_hours and isinstance(offset_hours, int):
-            dd = datetime.datetime.utcnow() - timedelta(hours=offset_hours)
+        elif offset_minutes and isinstance(offset_minutes, int):
+            dd = datetime.datetime.utcnow() - timedelta(minutes=offset_minutes)
             rcstart = dd.strftime("%Y-%m-%dT%H:%M:00.000Z")
 
         params = {
