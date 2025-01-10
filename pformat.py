@@ -1,5 +1,5 @@
 """
-python3 core8/pwb.py newapi/pformat 
+python3 core8/pwb.py newapi/pformat
 """
 import sys
 import wikitextparser as wtp
@@ -29,7 +29,7 @@ def make_new_text(text):
     # ---
     for temp in temps:
         temp_text = temp.string
-        new_temp = temp.pformat()
+        new_temp = temp.pformat(" ")
         new_text = new_text.replace(temp_text, new_temp)
     # ---
     return new_text
