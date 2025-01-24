@@ -764,14 +764,15 @@ class MainPage(Login, APIS):
                 return "missing"
         return False
 
-    def Create(self, text="", summary="", nodiff=""):
+    def Create(self, text="", summary="", nodiff="", noask=False):
         # ---
         self.newtext = text
         # ---
-        ask = self.ask_put(nodiff=nodiff)
-        # ---
-        if ask is False:
-            return False
+        if not noask:
+            ask = self.ask_put(nodiff=nodiff)
+            # ---
+            if ask is False:
+                return False
         # ---
         params = {
             "action": "edit",
