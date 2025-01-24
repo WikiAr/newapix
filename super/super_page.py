@@ -764,11 +764,11 @@ class MainPage(Login, APIS):
                 return "missing"
         return False
 
-    def Create(self, text="", summary=""):
+    def Create(self, text="", summary="", nodiff=""):
         # ---
         self.newtext = text
         # ---
-        ask = self.ask_put()
+        ask = self.ask_put(nodiff=nodiff)
         # ---
         if ask is False:
             return False
