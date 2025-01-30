@@ -26,6 +26,11 @@ def warn_err(err):
     return f"\ndef {nn}(): {err}"
 
 
+common_errors = [
+    "the JSON object must be str, bytes or bytearray, not NoneType",
+]
+
+
 def exception_err(e, text=""):
     # ---
     if not isinstance(text, str):
@@ -37,10 +42,12 @@ def exception_err(e, text=""):
     warn(warn_err(f"Exception:{str(e)}"), UserWarning, stacklevel=3)
     printe.warn(text)
     # ---
-    err = traceback.format_exc(limit=4)
-    err = str(err).replace("Traceback (most recent call last):", "").strip()
+    if str(e) not in common_errors:
+        # ---
+        err = traceback.format_exc(limit=4)
+        err = str(err).replace("Traceback (most recent call last):", "").strip()
+        printe.warn(err)
     # ---
-    printe.warn(err)
     printe.warn("CRITICAL:")
     # printe.info("====")
 

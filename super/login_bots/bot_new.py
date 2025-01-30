@@ -7,6 +7,7 @@ Exception:{'login': {'result': 'Failed', 'reason': 'You have made too many recen
 """
 import sys
 import os
+import copy
 
 # import json
 import requests
@@ -115,7 +116,7 @@ class MwClientSite:
 
     def do_request(self, params=None, method="POST"):
         # ---
-        params = params.copy()
+        params = copy.deepcopy(params)
         # ---
         action = params["action"]
         # ---

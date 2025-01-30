@@ -5,6 +5,7 @@ from newapi.ncc_page import CatDepth, CatDepthLogin
 # cat_members = CatDepth(title, sitecode='www', family="nccommons", depth=0, ns=10, nslist=[], onlyns=False, tempyes=[])
 
 """
+import copy
 import time
 import sys
 import tqdm
@@ -36,7 +37,10 @@ ns_list = {
     "101": "نقاش البوابة",
     "828": "وحدة",
     "829": "نقاش الوحدة",
-}
+    "2600": "موضوع",
+    "1728": "فعالية",
+    "1729": "نقاش الفعالية",
+    }
 
 
 # class CategoryDepth(Login):
@@ -275,7 +279,7 @@ class CategoryDepth(Login, BOTS_APIS):
         # ---
         # print(tab)
         if x in self.result_table:
-            tab2 = self.result_table[x].copy()
+            tab2 = copy.deepcopy(self.result_table[x])
             tab2.update(tab)
             tab = tab2
         # ---
