@@ -5,6 +5,7 @@ from newapi.ncc_page import CatDepth, CatDepthLogin
 # cat_members = CatDepth(title, sitecode='www', family="nccommons", depth=0, ns=10, nslist=[], onlyns=False, tempyes=[])
 
 """
+import copy
 import time
 import sys
 import tqdm
@@ -36,6 +37,9 @@ ns_list = {
     "101": "نقاش البوابة",
     "828": "وحدة",
     "829": "نقاش الوحدة",
+    "2600": "موضوع",
+    "1728": "فعالية",
+    "1729": "نقاش الفعالية",
 }
 
 
@@ -50,6 +54,8 @@ class CategoryDepth(Login, BOTS_APIS):
         self.print_s = kwargs.get("print_s", True)
         self.gcmlimit = kwargs.get("gcmlimit") or 1000
         self.no_props = kwargs.get("no_props") or False
+        # ---
+        self.len_pages = 0
         # ---
         self.printtest = printtest
         self.props = props or []
@@ -137,6 +143,8 @@ class CategoryDepth(Login, BOTS_APIS):
         return params
 
     def pages_table_work(self, table, pages):
+        # ---
+        self.len_pages += len(pages)
         # ---
         for category in pages:
             caca = pages[category] if isinstance(pages, dict) else category
@@ -275,7 +283,7 @@ class CategoryDepth(Login, BOTS_APIS):
         # ---
         # print(tab)
         if x in self.result_table:
-            tab2 = self.result_table[x].copy()
+            tab2 = copy.deepcopy(self.result_table[x])
             tab2.update(tab)
             tab = tab2
         # ---
@@ -353,7 +361,7 @@ def subcatquery(title, sitecode=SITECODE, family=FAMILY, depth=0, ns="all", nsli
         printe.output(result)
     # ---
     if print_s:
-        printe.output(f"<<lightblue>>catdepth_new.py: find {len(result)} pages({ns}) in {sitecode}:{title}, depth:{depth} in {delta} seconds")
+        printe.output(f"<<lightblue>>catdepth_new.py: find {len(result)} pages({ns}) in {sitecode}:{title}, depth:{depth} in {delta} seconds | {bot.len_pages=}")
     # ---
     return result
 

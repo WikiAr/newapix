@@ -14,6 +14,7 @@ Exception:{'login': {'result': 'Failed', 'reason': 'You have made too many recen
 
 """
 import os
+import copy
 import sys
 import time
 import urllib.parse
@@ -245,7 +246,7 @@ class Login(LOGIN_HELPS, HANDEL_ERRORS):
         # ---
         while continue_params != {} or d == 0:
             # ---
-            params2 = params.copy()
+            params2 = copy.deepcopy(params)
             # ---
             d += 1
             # ---
