@@ -8,7 +8,7 @@ import pymysql.cursors
 from newapi.except_err import exception_err
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None, main_args={}, credentials={}, conversions=None):
+def sql_connect_pymysql(query, return_dict=False, values=None, main_args={}, credentials={}, conversions=None, many=False):
     args = copy.deepcopy(main_args)
     args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     if conversions:
@@ -25,7 +25,10 @@ def sql_connect_pymysql(query, return_dict=False, values=None, main_args={}, cre
     with connection as conn, conn.cursor() as cursor:
         # skip sql errors
         try:
-            cursor.execute(query, params)
+            if many:
+                cursor.executemany(query, params)
+            else:
+                cursor.execute(query, params)
 
         except Exception as e:
             exception_err(e)

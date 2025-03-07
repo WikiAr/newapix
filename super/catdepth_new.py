@@ -40,7 +40,7 @@ ns_list = {
     "2600": "موضوع",
     "1728": "فعالية",
     "1729": "نقاش الفعالية",
-    }
+}
 
 
 # class CategoryDepth(Login):
@@ -54,6 +54,8 @@ class CategoryDepth(Login, BOTS_APIS):
         self.print_s = kwargs.get("print_s", True)
         self.gcmlimit = kwargs.get("gcmlimit") or 1000
         self.no_props = kwargs.get("no_props") or False
+        # ---
+        self.len_pages = 0
         # ---
         self.printtest = printtest
         self.props = props or []
@@ -141,6 +143,8 @@ class CategoryDepth(Login, BOTS_APIS):
         return params
 
     def pages_table_work(self, table, pages):
+        # ---
+        self.len_pages += len(pages)
         # ---
         for category in pages:
             caca = pages[category] if isinstance(pages, dict) else category
@@ -357,7 +361,7 @@ def subcatquery(title, sitecode=SITECODE, family=FAMILY, depth=0, ns="all", nsli
         printe.output(result)
     # ---
     if print_s:
-        printe.output(f"<<lightblue>>catdepth_new.py: find {len(result)} pages({ns}) in {sitecode}:{title}, depth:{depth} in {delta} seconds")
+        printe.output(f"<<lightblue>>catdepth_new.py: find {len(result)} pages({ns}) in {sitecode}:{title}, depth:{depth} in {delta} seconds | {bot.len_pages=}")
     # ---
     return result
 
