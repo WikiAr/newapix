@@ -39,9 +39,10 @@ purge       = page.purge()
 """
 # ---
 import sys
-sys.argv.append("nomwclient")
-
-print("sys.argv.append('nomwclient')")
+# ---
+if "mwclient" not in sys.argv:
+    sys.argv.append("nomwclient")
+    print("sys.argv.append('nomwclient')")
 
 import os
 from newapi.super import bot_api
