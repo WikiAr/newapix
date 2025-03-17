@@ -45,7 +45,7 @@ def get_query_data(query):
         data = sparql.query().convert()
     except Exception as e:
         # exception_err(e, text=f"API/tools.py quoteurl: Exception: {e}")
-        print("API/tools.py get_query_data: Exception: e" )
+        print("API/tools.py get_query_data: Exception: e")
     # ---
     return data
 
@@ -54,6 +54,6 @@ def get_query_result(query):
     # ---
     data = get_query_data(query)
     # ---
-    lista = [x for x in data["results"]["bindings"]]
+    lista = [x for x in data.get("results", {}).get("bindings", [])]
     # ---
     return lista
