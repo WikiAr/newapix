@@ -55,16 +55,16 @@ catdepth_new.SITECODE = "www"
 catdepth_new.FAMILY = "mdwiki"
 
 # ---
-User_tables = {
+User_tables_x = {
     "username": user_account_new.my_username,
     "password": user_account_new.mdwiki_pass,
 }
 # ---
 user_agent = super_page.default_user_agent()
 # ---
-super_page.User_tables["mdwiki"] = User_tables
-bot_api.User_tables["mdwiki"] = User_tables
-catdepth_new.User_tables["mdwiki"] = User_tables
+super_page.add_Usertables(User_tables_x, "mdwiki")
+bot_api.add_Usertables(User_tables_x, "mdwiki")
+catdepth_new.add_Usertables(User_tables_x, "mdwiki")
 # ---
 NEW_API = bot_api.NEW_API
 
@@ -78,6 +78,7 @@ CatDepthLogin = catdepth_new.login_wiki
 # ---
 # xxxxxxxxxxx
 home_dir = os.getenv("HOME")
+
 
 def test():
     """
@@ -99,7 +100,7 @@ def test():
     text = page.get_text()
     print(f"{len(text)=}")
     # ---
-    text_html   = page.get_text_html()
+    text_html = page.get_text_html()
     # ---
     print('---------------------------')
     # print(text_html)

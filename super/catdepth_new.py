@@ -16,8 +16,6 @@ from newapi.super.super_login import Login
 SITECODE = "en"
 FAMILY = "wikipedia"
 
-User_tables = {}
-
 ns_list = {
     "0": "",
     "1": "نقاش",
@@ -42,6 +40,11 @@ ns_list = {
     "1729": "نقاش الفعالية",
 }
 
+
+User_tables = {}
+
+def add_Usertables(table, family):
+    User_tables[family] = table
 
 # class CategoryDepth(Login):
 class CategoryDepth(Login, BOTS_APIS):
