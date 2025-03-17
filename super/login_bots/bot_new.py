@@ -102,7 +102,7 @@ class MwClientSite:
 
         if not self.site_mwclient.logged_in:
             logins_count[1] += 1
-            printe.output(f"<<yellow>>logging in to ({self.domain}) count:{logins_count[1]}")
+            printe.output(f"<<yellow>>logging in to ({self.domain}) count:{logins_count[1]}, user: {self.username}")
             try:
                 self.site_mwclient.login(username=self.username, password=self.password)
             except Exception as e:

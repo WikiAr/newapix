@@ -58,7 +58,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
         self.sea_key = f"{self.lang}-{self.family}-{self.username}"
 
     def add_User_tables(self, family, table) -> None:
-        # print(f"add_User_tables: {family=}")
+        print(f"add_User_tables: {family=}")
         if self.family == family or (self.lang == "ar" and self.family.startswith("wik")):  # wiktionary
             self.user_table_done = True
             User_tables[family] = table
