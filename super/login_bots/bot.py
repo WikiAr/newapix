@@ -65,7 +65,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
 
     def add_User_tables(self, family, table) -> None:
         # ---
-        if table["username"].find("bot") == -1:
+        if table["username"].find("bot") == -1 and family == "wikipedia":
             print(f"add_User_tables: {family=}, {table['username']=}")
         # ---
         if self.family == family or (self.lang == "ar" and self.family.startswith("wik")):  # wiktionary
