@@ -81,9 +81,9 @@ User_tables = {
 # ---
 user_agent = super_page.default_user_agent()
 # ---
-super_page.User_tables["nccommons"] = User_tables
-bot_api.User_tables["nccommons"] = User_tables
-catdepth_new.User_tables["nccommons"] = User_tables
+super_page.add_Usertables(User_tables, "nccommons")
+bot_api.add_Usertables(User_tables, "nccommons")
+catdepth_new.add_Usertables(User_tables, "nccommons")
 # ---
 NEW_API = bot_api.NEW_API
 MainPage = super_page.MainPage

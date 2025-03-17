@@ -64,8 +64,6 @@ print_test = {1: False}
 # ---
 Edit_summary_line = {1: " -Edit summary: %s:"}
 # ---
-User_tables = {}
-# ---
 not_loged_m = {1: ""}
 Save_Edit_Pages = {1: False}
 # ---
@@ -84,6 +82,10 @@ change_codes = {
     "zh_yue": "zh-yue",
 }
 
+User_tables = {}
+
+def add_Usertables(table, family):
+    User_tables[family] = table
 
 def default_user_agent():
     tool = os.getenv("HOME")
