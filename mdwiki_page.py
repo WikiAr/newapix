@@ -69,7 +69,7 @@ catdepth_new.add_Usertables(User_tables_x, "mdwiki")
 NEW_API = bot_api.NEW_API
 
 MainPage = super_page.MainPage
-md_MainPage = MainPage
+md_MainPage = super_page.MainPage
 
 change_codes = super_page.change_codes
 CategoryDepth = catdepth_new.CategoryDepth
