@@ -663,7 +663,7 @@ def showDiff(text_a: str, text_b: str, context: int = 0) -> None:
     PatchManager(text_a, text_b, context=context).print_hunks()
 
 
-def output(textm, *kwargs):
+def output(textm, *uargs, **kwargs):
     """
     Prints the given text with color formatting.
 
@@ -676,10 +676,10 @@ def output(textm, *kwargs):
     """
     if "noprint" in sys.argv:
         return
-
+    end = kwargs.get("end", "\n")
     toprint = make_str(textm)
 
-    print(toprint)
+    print(toprint, end=end)
 
 
 def error(text):
