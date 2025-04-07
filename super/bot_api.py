@@ -49,8 +49,6 @@ from newapi import printe
 from newapi.super.botapi_bots.bot import BOTS_APIS
 from newapi.super.super_login import Login
 
-User_tables = {}
-
 change_codes = {
     "bat_smg": "bat-smg",
     "be-x-old": "be-tarask",
@@ -65,6 +63,11 @@ change_codes = {
     "zh_min_nan": "zh-min-nan",
     "zh_yue": "zh-yue",
 }
+
+User_tables = {}
+
+def add_Usertables(table, family):
+    User_tables[family] = table
 
 
 def test_print(s):

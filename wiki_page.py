@@ -27,9 +27,9 @@ from newapi.wiki_page import MainPage, NEW_API
 # ---
 import os
 import sys
-from newapi.super import bot_api
-from newapi.super import super_page
-from newapi.super import catdepth_new
+from newapi.super import bot_api as bot_api1
+from newapi.super import super_page as super_page1
+from newapi.super import catdepth_new as catdepth_new1
 
 from apis import user_account_new
 
@@ -52,22 +52,22 @@ User_tables = {
 # ---
 print(f"{pyy_file} use {User_tables['username']} account.")
 # ---
-user_agent = super_page.default_user_agent()
+user_agent = super_page1.default_user_agent()
 # ---
-super_page.User_tables["wikipedia"] = User_tables
-bot_api.User_tables["wikipedia"] = User_tables
-catdepth_new.User_tables["wikipedia"] = User_tables
+super_page1.add_Usertables(User_tables, "wikipedia")
+bot_api1.add_Usertables(User_tables, "wikipedia")
+catdepth_new1.add_Usertables(User_tables, "wikipedia")
 # ---
-super_page.User_tables["wikidata"] = User_tables
-bot_api.User_tables["wikidata"] = User_tables
-catdepth_new.User_tables["wikidata"] = User_tables
+super_page1.add_Usertables(User_tables, "wikidata")
+bot_api1.add_Usertables(User_tables, "wikidata")
+catdepth_new1.add_Usertables(User_tables, "wikidata")
 # ---
-NEW_API = bot_api.NEW_API
-MainPage = super_page.MainPage
-change_codes = super_page.change_codes
-CategoryDepth = catdepth_new.CategoryDepth
-CatDepth = catdepth_new.subcatquery
-CatDepthLogin = catdepth_new.login_wiki
+NEW_API = bot_api1.NEW_API
+MainPage = super_page1.MainPage
+change_codes = super_page1.change_codes
+CategoryDepth = catdepth_new1.CategoryDepth
+CatDepth = catdepth_new1.subcatquery
+CatDepthLogin = catdepth_new1.login_wiki
 
 
 def test():
@@ -125,5 +125,5 @@ def test():
 
 if __name__ == "__main__":
     # python3 core8/pwb.py newapi/wiki_page
-    # super_page.print_test[1] = True
+    # super_page1.print_test[1] = True
     test()

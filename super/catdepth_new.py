@@ -16,8 +16,6 @@ from newapi.super.super_login import Login
 SITECODE = "en"
 FAMILY = "wikipedia"
 
-User_tables = {}
-
 ns_list = {
     "0": "",
     "1": "نقاش",
@@ -43,7 +41,15 @@ ns_list = {
 }
 
 
+User_tables = {}
+
+
+def add_Usertables(table, family):
+    User_tables[family] = table
+
 # class CategoryDepth(Login):
+
+
 class CategoryDepth(Login, BOTS_APIS):
     def __init__(self, title, sitecode=SITECODE, family=FAMILY, depth=0, ns="all", nslist=[], onlyns=False, without_lang="", with_lang="", tempyes=[], no_gcmsort=False, props=None, only_titles=False, printtest=False, **kwargs):
         # ---
@@ -54,6 +60,8 @@ class CategoryDepth(Login, BOTS_APIS):
         self.print_s = kwargs.get("print_s", True)
         self.gcmlimit = kwargs.get("gcmlimit") or 1000
         self.no_props = kwargs.get("no_props") or False
+        # ---
+        self.limit = kwargs.get("limit") or 0
         # ---
         self.len_pages = 0
         # ---
@@ -243,6 +251,10 @@ class CategoryDepth(Login, BOTS_APIS):
             # ---
             d += 1
             # ---
+            if self.limit > 0 and len(results) >= self.limit:
+                printe.output(f"<<yellow>> limit:{self.limit} reached, len of results: {len(results)} break ..")
+                break
+            # ---
             if continue_params:
                 # params = {**params, **continue_params}
                 params.update(continue_params)
@@ -305,6 +317,10 @@ class CategoryDepth(Login, BOTS_APIS):
         # ---
         while self.depth > depth_done:
             new_tab2 = []
+            # ---
+            if self.limit > 0 and len(self.result_table) >= self.limit:
+                printe.output(f"<<yellow>> limit:{self.limit} reached, len of results: {len(self.result_table)} break ..")
+                break
             # ---
             depth_done += 1
             # ---

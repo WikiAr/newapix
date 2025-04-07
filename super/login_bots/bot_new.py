@@ -25,8 +25,14 @@ from newapi.super.login_bots.mwclient.client import Site
 
 # cookies = get_cookies(lang, family, username)
 users_by_lang = {}
-User_tables = {}
 logins_count = {1: 0}
+
+
+User_tables = {}
+
+
+def add_Usertables(table, family):
+    User_tables[family] = table
 
 
 def default_user_agent():
@@ -102,7 +108,7 @@ class MwClientSite:
 
         if not self.site_mwclient.logged_in:
             logins_count[1] += 1
-            printe.output(f"<<yellow>>logging in to ({self.domain}) count:{logins_count[1]}")
+            printe.output(f"<<yellow>>logging in to ({self.domain}) count:{logins_count[1]}, user: {self.username}")
             try:
                 self.site_mwclient.login(username=self.username, password=self.password)
             except Exception as e:
@@ -155,12 +161,18 @@ class LOGIN_HELPS(MwClientSite, PARAMS_HELPS):
         self.user_table_done = False
 
     def add_User_tables(self, family, table) -> None:
-        # print(f"add_User_tables: {family=}")
+        # ---
+        if table["username"].find("bot") == -1 and family == "wikipedia":
+            print(f"add_User_tables: {family=}, {table['username']=}")
+        # ---
         if self.family == family or (self.lang == "ar" and self.family.startswith("wik")):  # wiktionary
             self.user_table_done = True
+            # ---
             User_tables[family] = table
+            # ---
             self.username = table["username"]
             self.password = table["password"]
+            # ---
             self._start_(self.username, self.password)
 
     def make_new_r3_token(self) -> str:

@@ -53,17 +53,17 @@ if "workibrahem" in sys.argv:
 # ---
 user_agent = super_page.default_user_agent()
 # ---
-super_page.User_tables["wikipedia"] = User_tables
-bot_api.User_tables["wikipedia"] = User_tables
-catdepth_new.User_tables["wikipedia"] = User_tables
+super_page.add_Usertables(User_tables, "wikipedia")
+bot_api.add_Usertables(User_tables, "wikipedia")
+catdepth_new.add_Usertables(User_tables, "wikipedia")
 # ---
-super_page.User_tables["wikisource"] = User_tables
-bot_api.User_tables["wikisource"] = User_tables
-catdepth_new.User_tables["wikisource"] = User_tables
+super_page.add_Usertables(User_tables, "wikisource")
+bot_api.add_Usertables(User_tables, "wikisource")
+catdepth_new.add_Usertables(User_tables, "wikisource")
 # ---
-super_page.User_tables["wikidata"] = User_tables
-bot_api.User_tables["wikidata"] = User_tables
-catdepth_new.User_tables["wikidata"] = User_tables
+super_page.add_Usertables(User_tables, "wikidata")
+bot_api.add_Usertables(User_tables, "wikidata")
+catdepth_new.add_Usertables(User_tables, "wikidata")
 # ---
 NEW_API = bot_api.NEW_API
 MainPage = super_page.MainPage

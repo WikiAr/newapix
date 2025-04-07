@@ -19,8 +19,14 @@ from newapi.super.login_bots.params_help import PARAMS_HELPS
 # cookies = get_cookies(lang, family, username)
 seasons_by_lang = {}
 users_by_lang = {}
-User_tables = {}
 logins_count = {1: 0}
+
+
+User_tables = {}
+
+
+def add_Usertables(table, family):
+    User_tables[family] = table
 
 
 def default_user_agent():
@@ -58,7 +64,10 @@ class LOGIN_HELPS(PARAMS_HELPS):
         self.sea_key = f"{self.lang}-{self.family}-{self.username}"
 
     def add_User_tables(self, family, table) -> None:
-        # print(f"add_User_tables: {family=}")
+        # ---
+        if table["username"].find("bot") == -1 and family == "wikipedia":
+            print(f"add_User_tables: {family=}, {table['username']=}")
+        # ---
         if self.family == family or (self.lang == "ar" and self.family.startswith("wik")):  # wiktionary
             self.user_table_done = True
             User_tables[family] = table
