@@ -641,7 +641,7 @@ class MainPage(Login, APIS):
         self.templates = txtlib.extract_templates_and_params(self.text)
         return self.templates
 
-    def save(self, newtext="", summary="", nocreate=1, minor="", tags="", nodiff=False, ASK=False):
+    def save(self, newtext="", summary="", nocreate=1, minor="0", tags="", nodiff=False, ASK=False):
         """Save the new text to a specified title with optional parameters.
 
         This function updates the content of a page with new text. It handles
