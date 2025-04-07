@@ -43,7 +43,6 @@ ns_list = {
 
 User_tables = {}
 
-
 def add_Usertables(table, family):
     User_tables[family] = table
 
