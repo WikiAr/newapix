@@ -259,9 +259,12 @@ class MainPage(Login, APIS):
             if print_test[1] or "printdata" in sys.argv:
                 warn(warn_err(f"v:{str(v)}"), UserWarning)
             # ---
+            if "ns" in v:
+                self.ns = v["ns"] # ns = 0 !
+            # ---
             if "missing" in v or k == "-1":
                 self.Exists = False
-                break
+                # break
             else:
                 self.Exists = True
             # ---
@@ -273,7 +276,6 @@ class MainPage(Login, APIS):
             # "flagged": { "stable_revid": 61366100, "level": 0, "level_text": "stable"}
             self.flagged = v.get("flagged", False) is not False
             # ---
-            self.ns = v.get("ns") or self.ns
             self.pageid = v.get("pageid") or self.pageid
             # ---
             page = v.get("revisions", [{}])[0]
@@ -409,7 +411,7 @@ class MainPage(Login, APIS):
         to = redirects.get("to", "")
         # ---
         if to:
-            printe.output(f"<<lightyellow>>Page:{self.title} redirect to {to}")
+            printe.output(f"<<lightyellow>>Page:({self.title}) redirect to ({to})")
         # ---
         return to
 
