@@ -4,7 +4,7 @@ python3 core8/pwb.py newapi/tests/test_bot_api mwclient
 python3 core8/pwb.py newapi/tests/test_bot_api
 python3 core8/pwb.py newapi/tests/test_bot_api test:13 printresult
 python3 core8/pwb.py newapi/tests/test_bot_api test:4
-python3 core8/pwb.py newapi/tests/test_bot_api test:44
+python3 core8/pwb.py newapi/tests/test_bot_api test:14
 python3 core8/pwb.py newapi/tests/test_bot_api noprr test:9
 
 """
@@ -160,6 +160,13 @@ class testmybot:
         move_it = self.api_new.get_pageassessments("yemen")
         return move_it
 
+    def test14(self):
+        """users_infos"""
+        api_new = NEW_API("ar", family="wikipedia")
+        users = api_new.users_infos(ususers=["Mr. Ibrahem", "93.112.145.86"])
+
+        return users
+
     def start(self):
         """Start the execution of defined test functions based on command-line
         arguments.
@@ -192,6 +199,7 @@ class testmybot:
             11: self.test11,
             12: self.test12,
             13: self.test13,
+            14: self.test14
         }
         # ---
         for arg in sys.argv:
@@ -240,6 +248,8 @@ class testmybot:
                     printe.output(result)
                 else:
                     printe.output(result)
+            else:
+                printe.output("<<purple>> add 'printresult' to sys.argv to print result")
             # ---
             if result:
                 printe.output(f"{len(result)=}")

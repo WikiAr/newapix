@@ -27,6 +27,7 @@ from newapi.page import NEW_API
 # added    = api_new.Add_To_Bottom(text, summary, title, poss="Head|Bottom")
 # titles   = api_new.get_titles_redirects(titles)
 # titles   = api_new.get_pageassessments(titles)
+# users    = api_new.users_infos(ususers=["Mr. Ibrahem"])
 Usage:
 from newapi.page import NEW_API
 # ---
@@ -65,6 +66,7 @@ change_codes = {
 }
 
 User_tables = {}
+
 
 def add_Usertables(table, family):
     User_tables[family] = table
@@ -816,3 +818,29 @@ class NEW_API(Login, BOTS_APIS):
             self.cxtoken_expiration = exp
         # ---
         return jwt
+
+    def users_infos(self, ususers=[]):
+        # ---
+        params = {
+            "action": "query",
+            "format": "json",
+            "list": "users",
+            "utf8": 1,
+            "formatversion": "2",
+            "usprop": "groups|implicitgroups|editcount|gender|registration",
+            "ususers": "Mr.Ibrahembot"
+        }
+        # ---
+        all_usprops = ["groups", "implicitgroups", "cancreate", "editcount", "centralids", "blockinfo", "emailable", "gender", "groupmemberships", "registration", "rights"]
+        # ---
+        ususers = list(set(ususers))
+        # ---
+        params["ususers"] = "|".join(ususers)
+        # ---
+        results = self.post_continue(params, "query", _p_="users", p_empty=[])
+        # ---
+        test_print(f"users_infos len(results) = {len(results)}")
+        # ---
+        results = [dict(x) for x in results]
+        # ---
+        return results
