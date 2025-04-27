@@ -26,7 +26,7 @@ from newapi.wiki_page import MainPage, NEW_API
 """
 # ---
 import os
-import sys
+# import sys
 from newapi.super import bot_api as bot_api1
 from newapi.super import super_page as super_page1
 from newapi.super import catdepth_new as catdepth_new1
