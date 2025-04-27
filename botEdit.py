@@ -76,7 +76,8 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
                     if "all" in List or edit_username[1] in List:
                         printe.output(f"<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.")
                         # printe.output( 'return False 3 ' )
-                        Bot_Cash[title_page] = False
+                        # Bot_Cash[title_page] = False
+                        Bot_Cash[botjob][title_page] = False
                         return False
             # ---
             # {{bots|allow=<botlist>}}  منع جميع البوتات غير الموجودة في القائمة
