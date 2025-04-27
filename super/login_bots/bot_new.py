@@ -53,6 +53,9 @@ class MwClientSite:
         self.family = family
         self.username = None
         self.password = None
+        # ---
+        self.login_done = False
+        # ---
         self.force_login = "nologin" not in sys.argv
         self.user_agent = default_user_agent()
         self.domain = getattr(self, "domain") if hasattr(self, "domain") else ""
@@ -66,7 +69,7 @@ class MwClientSite:
 
         self.__initialize_connection()
         self.__initialize_site()
-        self.do_login()
+        # self.do_login()
 
     def __initialize_connection(self):
         cookies_file = get_file_name(self.lang, self.family, self.username)
@@ -99,6 +102,7 @@ class MwClientSite:
                 return False
 
     def do_login(self):
+
         if not self.force_login:
             return
 
@@ -122,6 +126,10 @@ class MwClientSite:
 
     def do_request(self, params=None, method="POST"):
         # ---
+        if not self.login_done:
+            self.do_login()
+            self.login_done = True
+        # ---
         params = copy.deepcopy(params)
         # ---
         action = params["action"]
@@ -131,6 +139,7 @@ class MwClientSite:
         if not self.site_mwclient:
             printe.output(f"no self.ssite_mwclient to ({self.domain})")
             self.__initialize_site()
+            self.do_login()
         # ---
         if "dopost" in sys.argv:
             r4 = self.site_mwclient.api(action, http_method=method, **params)
