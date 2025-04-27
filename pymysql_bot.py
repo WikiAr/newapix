@@ -8,7 +8,7 @@ import pymysql.cursors
 from newapi.except_err import exception_err
 
 
-def sql_connect_pymysql(query, return_dict=False, values=None, main_args={}, credentials={}, conversions=None, many=False):
+def sql_connect_pymysql(query, return_dict=False, values=None, main_args={}, credentials={}, conversions=None, many=False, **kwargs):
     args = copy.deepcopy(main_args)
     args["cursorclass"] = pymysql.cursors.DictCursor if return_dict else pymysql.cursors.Cursor
     if conversions:
