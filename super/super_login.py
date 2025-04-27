@@ -19,7 +19,6 @@ import sys
 import time
 import urllib.parse
 
-import pywikibot
 from newapi import printe
 from newapi.super.bots.handel_errors import HANDEL_ERRORS
 from newapi.except_err import warn_err
@@ -195,7 +194,7 @@ class Login(LOGIN_HELPS, HANDEL_ERRORS):
                 printe.output(f"<<red>> super_login(post): error: {error}")
             # ---
             if Invalid == "Invalid CSRF token.":
-                pywikibot.output(f'<<red>> ** error "Invalid CSRF token.".\n{self.r3_token} ')
+                printe.output(f'<<red>> ** error "Invalid CSRF token.".\n{self.r3_token} ')
                 if CSRF:
                     # ---
                     self.r3_token = self.make_new_r3_token()

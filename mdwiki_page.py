@@ -49,7 +49,7 @@ from newapi.super import bot_api
 from newapi.super import super_page
 from newapi.super import catdepth_new
 
-from apis import user_account_new
+from newapi import user_account_new
 
 catdepth_new.SITECODE = "www"
 catdepth_new.FAMILY = "mdwiki"

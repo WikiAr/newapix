@@ -45,7 +45,6 @@ purge       = page.purge()
 
 """
 import os
-import pywikibot
 from warnings import warn
 import sys
 import wikitextparser as wtp
@@ -181,7 +180,7 @@ class MainPage(Login, APIS):
             # ---
             printe.output(Edit_summary_line[1] % self.summary)
             # ---
-            sa = pywikibot.input(f"<<lightyellow>>page.py: Do you want to accept these changes? (yes, no): for page {self.lang}:{self.title}? {self.username=}")
+            sa = input(f"<<lightyellow>>page.py: Do you want to accept these changes? (yes, no): for page {self.lang}:{self.title}? {self.username=}")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")

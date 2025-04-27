@@ -3,9 +3,6 @@
 from newapi.wd_sparql import get_query_result, get_query_data
 
 """
-import traceback
-from newapi.except_err import exception_err
-import pywikibot
 import sys
 from SPARQLWrapper import SPARQLWrapper, JSON
 
