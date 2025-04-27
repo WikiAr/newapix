@@ -4,8 +4,8 @@ bot_edit!
 #
 #
 import sys
-from newapi import printe
-from newapi import txtlib
+from . import printe
+from . import txtlib
 
 # ---
 edit_username = {1: "Mr.Ibrahembot"}
@@ -134,6 +134,10 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
     Bot_Cash[botjob][title_page] = True
     # ---
     return True
+
+
+def botMayEdit(**kwargs):
+    return bot_May_Edit(**kwargs)
 
 
 # ---
