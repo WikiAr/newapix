@@ -36,7 +36,8 @@ class BOTS_APIS(HANDEL_ERRORS):
                     printe.output(f"diference in bytes: {len(newtext) - len(text)}")
                     printe.output(f"length of text: {len(text)}, length of newtext: {len(newtext)}")
             # ---
-            sa = input(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
+            printe.output(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
+            sa = input("([y]es, [N]o, [a]ll)?")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")
@@ -131,7 +132,8 @@ class BOTS_APIS(HANDEL_ERRORS):
             return False
         # ---
         if not self.save_move and "ask" in sys.argv:
-            sa = input(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? ([y]es, [N]o, [a]ll)? {self.username=}")
+            printe.output(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? {self.username=}")
+            sa = input("([y]es, [N]o, [a]ll)?")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")

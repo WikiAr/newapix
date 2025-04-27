@@ -72,7 +72,7 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
                     return False
                 elif params.get("1"):
                     List = [x.strip() for x in params.get("1", "").split(",")]
-                    # if 'all' in List or printe.calledModuleName() in List or edit_username[1] in List:
+                    # if 'all' in List or pywikibot.calledModuleName() in List or edit_username[1] in List:
                     if "all" in List or edit_username[1] in List:
                         printe.output(f"<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.")
                         # printe.output( 'return False 3 ' )
