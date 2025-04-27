@@ -48,14 +48,14 @@ import os
 from warnings import warn
 import sys
 import wikitextparser as wtp
-from newapi import printe
-from newapi import txtlib
-from newapi import botEdit
+from .. import printe
+from .. import txtlib
+from .. import botEdit
 
-from newapi.super.page_bots.ar_err import find_edit_error
-from newapi.super.page_bots.bot import APIS
-from newapi.super.super_login import Login
-from newapi.except_err import exception_err, warn_err
+from .page_bots.ar_err import find_edit_error
+from .page_bots.bot import APIS
+from .super_login import Login
+from ..except_err import exception_err, warn_err
 
 file_name = os.path.basename(__file__)
 
@@ -83,8 +83,10 @@ change_codes = {
 
 User_tables = {}
 
+
 def add_Usertables(table, family):
     User_tables[family] = table
+
 
 def default_user_agent():
     tool = os.getenv("HOME")
@@ -259,7 +261,7 @@ class MainPage(Login, APIS):
                 warn(warn_err(f"v:{str(v)}"), UserWarning)
             # ---
             if "ns" in v:
-                self.ns = v["ns"] # ns = 0 !
+                self.ns = v["ns"]  # ns = 0 !
             # ---
             if "missing" in v or k == "-1":
                 self.Exists = False

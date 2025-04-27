@@ -1,11 +1,11 @@
 """
 
-from newapi.super.login_bots.params_help import PARAMS_HELPS
+from .super.login_bots.params_help import PARAMS_HELPS
 
 """
 import sys
 import json
-from newapi.except_err import exception_err
+from ...except_err import exception_err
 
 
 class PARAMS_HELPS:

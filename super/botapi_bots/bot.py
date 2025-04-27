@@ -4,8 +4,8 @@ from newapi.super.botapi_bots.bot import BOTS_APIS
 
 """
 import sys
-from newapi import printe
-from newapi.super.bots.handel_errors import HANDEL_ERRORS
+from ... import printe
+from ..bots.handel_errors import HANDEL_ERRORS
 
 yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
 Save_Edit_Pages = {1: False}

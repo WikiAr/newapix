@@ -19,14 +19,14 @@ import sys
 import time
 import urllib.parse
 
-from newapi import printe
-from newapi.super.bots.handel_errors import HANDEL_ERRORS
-from newapi.except_err import warn_err
+from .. import printe
+from .bots.handel_errors import HANDEL_ERRORS
+from ..except_err import warn_err
 
 if "nomwclient" in sys.argv:
-    from newapi.super.login_bots.bot import LOGIN_HELPS
+    from .login_bots.bot import LOGIN_HELPS
 else:
-    from newapi.super.login_bots.bot_new import LOGIN_HELPS
+    from .login_bots.bot_new import LOGIN_HELPS
 
 file_name = os.path.basename(__file__)
 print_test = {1: False}
