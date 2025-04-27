@@ -4,7 +4,6 @@ from newapi.super.botapi_bots.bot import BOTS_APIS
 
 """
 import sys
-import pywikibot
 from newapi import printe
 from newapi.super.bots.handel_errors import HANDEL_ERRORS
 
@@ -37,7 +36,7 @@ class BOTS_APIS(HANDEL_ERRORS):
                     printe.output(f"diference in bytes: {len(newtext) - len(text)}")
                     printe.output(f"length of text: {len(text)}, length of newtext: {len(newtext)}")
             # ---
-            sa = pywikibot.input(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
+            sa = input(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")
@@ -132,7 +131,7 @@ class BOTS_APIS(HANDEL_ERRORS):
             return False
         # ---
         if not self.save_move and "ask" in sys.argv:
-            sa = pywikibot.input(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? ([y]es, [N]o, [a]ll)? {self.username=}")
+            sa = input(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? ([y]es, [N]o, [a]ll)? {self.username=}")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")

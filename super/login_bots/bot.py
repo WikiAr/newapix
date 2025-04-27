@@ -10,7 +10,6 @@ import os
 import requests
 from http.cookiejar import MozillaCookieJar
 
-import pywikibot
 from newapi import printe
 from newapi.super.login_bots.cookies_bot import get_file_name, del_cookies_file
 from newapi.except_err import exception_err
@@ -190,7 +189,7 @@ class LOGIN_HELPS(PARAMS_HELPS):
         # exception_err(r22)
         # ---
         if reason == "Incorrect username or password entered. Please try again.":
-            pywikibot.output(f"user:{self.username}, pass:******")
+            printe.output(f"user:{self.username}, pass:******")
         # ---
         return False
 

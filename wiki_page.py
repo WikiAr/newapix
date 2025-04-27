@@ -31,7 +31,7 @@ from newapi.super import bot_api as bot_api1
 from newapi.super import super_page as super_page1
 from newapi.super import catdepth_new as catdepth_new1
 
-from apis import user_account_new
+from newapi import user_account_new
 
 # ---
 home_dir = os.getenv("HOME")
