@@ -150,6 +150,10 @@ class MwClientSite:
                 return r4
 
             except Exception as e:
+                # ---
+                if "text" in params:
+                    params["text"] = params["text"][:100]
+                # ---
                 exception_err(e, text=params)
         # ---
         return {}
