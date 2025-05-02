@@ -48,17 +48,17 @@ Filter pages based on interlanguage links:
 
 ```` python
 # Only pages with French language links
-pages = subcatquery("Example Category", with_lang="fr")
+pages = CatDepth("Example Category", with_lang="fr")
 
 # Exclude pages with Spanish language links
-pages = subcatquery("Example Category", without_lang="es")
+pages = CatDepth("Example Category", without_lang="es")
 ````
 
 ### Deep Category Traversal
 
 ```` python
 # Get all pages in the category and 2 levels of subcategories
-all_pages = subcatquery("Example Category", depth=2)
+all_pages = CatDepth("Example Category", depth=2)
 
 ````
 
@@ -66,7 +66,7 @@ all_pages = subcatquery("Example Category", depth=2)
 
 ```` python
 # Get just the titles, without metadata
-titles = subcatquery(
+titles = CatDepth(
     "Python libraries",
     only_titles=True,
     sitecode="en",
