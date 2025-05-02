@@ -4,6 +4,7 @@ Python module for Wikimedia API:
 # Newapi.page Module:
 
 ## MainPage
+
 The ````MainPage```` class is a core component of the newapi framework that provides a high-level interface for interacting with individual wiki pages across various MediaWiki sites. It encapsulates all operations related to reading, editing, and analyzing specific pages, abstracting away the complexity of direct API calls.
 
 For general API operations that don't target specific pages, see NEW_API Class. For category-specific operations, see CatDepth.
@@ -104,20 +105,18 @@ for x in references:
 
 ````
 
-### Others
+### Editing Page
+This document details how to edit and create wiki pages using the NewAPI framework. It covers the primary methods for page modification, permission checking, and best practices for making edits to MediaWiki pages.
+
+#### Save
+
 ```` python
 
-# Get page HTML representation
-text_html = page.get_text_html()
-
-# ---
-flagged     = page.is_flagged()
-revisions   = page.get_revisions(rvprops=['content'])
-# ---
-purge       = page.purge()
-
 # Edit an existing page
+page = MainPage("New Page Title", "en", family="wikipedia")
+
 new_text = "This is the new content of the page."
+
 save_page = page.save(
     newtext=new_text,
     summary="Edit summary",
@@ -127,16 +126,43 @@ save_page = page.save(
     nodiff=False,# Show diff when ASK is True
     ASK=False    # Don't ask for confirmation
 )
+````
 
+#### Create
+
+```` python
 # Create a new page
-success = page.Create(
-    text="This is the content of the new page.",
-    summary="Create page",
-    nodiff="",   # Show diff when not in nodiff mode
-    noask=False  # Ask for confirmation
-)
+page = MainPage("New Page Title", "en", family="wikipedia")
+
+if not page.exists():
+    success = page.Create(
+        text="This is the content of the new page.",
+        summary="Create page",
+        nodiff="",   # Show diff when not in nodiff mode
+        noask=False  # Ask for confirmation
+    )
 
 ````
+
+### Additional Page Operations
+```` python
+
+# Get page HTML representation
+text_html = page.get_text_html()
+
+#
+flagged     = page.is_flagged()
+
+#
+revisions   = page.get_revisions(rvprops=['content'])
+
+# Purging the Page Cache
+purge       = page.purge()
+
+````
+
+----
+
 ## CatDepth
 
 ```` python
@@ -145,6 +171,8 @@ from newapi.page import CatDepth
 cat_members = CatDepth("Category title", sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], tempyes=[])
 
 ````
+----
+
 ## NEW_API
 The NEW_API class provides a robust, high-level interface to the MediaWiki API, abstracting away the complexities of direct API interaction. By providing methods for common operations like searching, retrieving pages, working with templates, and handling user contributions, it enables developers to create sophisticated tools and bots for MediaWiki platforms with minimal code.
 
@@ -282,4 +310,17 @@ result = api_new.Add_To_Bottom(
     'Page Title'
 )
 
+````
+
+
+
+----
+# Newapi.pformat Module:
+For complex edits involving templates, the framework includes utilities to format template syntax in a standard way:
+
+```` python
+from newapi import pformat
+
+# Format templates in text
+new_text = pformat.make_new_text(text)
 ````
