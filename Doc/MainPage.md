@@ -102,6 +102,25 @@ for x in references:
 ### Editing Page
 This document details how to edit and create wiki pages using the NewAPI framework. It covers the primary methods for page modification, permission checking, and best practices for making edits to MediaWiki pages.
 
+```` python
+
+# Modify page content
+if page.exists():
+    # Get current text
+    text = page.get_text()
+
+    # Check if we can edit this page (respects bot exclusion rules)
+    if page.can_edit(script='mybot'):
+        # Make changes to text
+        new_text = text.replace("old text", "new text")
+
+        # Save changes
+        saved = page.save(newtext=new_text, summary="Replaced old text with new text")
+
+        if saved:
+            print("Edit saved successfully!")
+````
+
 #### Save
 
 ```` python
@@ -152,5 +171,116 @@ revisions   = page.get_revisions(rvprops=['content'])
 
 # Purging the Page Cache
 purge       = page.purge()
+
+````
+
+# Complete Editing Examples
+
+## Example 1: Reading and Modifying a Page
+```` python
+from newapi.page import MainPage
+
+# Create a page instance
+page = MainPage("Example Article", "en", family="wikipedia")
+
+# Check if the page exists
+if not page.exists():
+    print("Page does not exist")
+    return
+
+# Check if bot editing is allowed
+if not page.can_edit(script="fixref"):
+    print("Bot editing is not allowed on this page")
+    return
+
+# Skip certain types of pages
+if page.isDisambiguation() or page.isRedirect():
+    print("Page is a disambiguation or redirect")
+    return
+
+# Get the current text
+text = page.get_text()
+
+# Make changes (example: add a category)
+if "[[Category:Example Category]]" not in text:
+    newtext = text + "\n[[Category:Example Category]]"
+
+    # Save the changes
+    success = page.save(
+        newtext=newtext,
+        summary="Added Example Category",
+        minor="1"  # Mark as minor edit
+    )
+
+    if success:
+        print("Edit successful")
+    else:
+        print("Edit failed")
+````
+
+## Example 2: Creating a New Page
+```` python
+from newapi.page import MainPage
+
+# Create a page instance
+page = MainPage("New Page Title", "en", family="wikipedia")
+
+# Check if the page already exists
+if page.exists():
+    print("Page already exists")
+    return
+
+# Prepare the content
+text = """== Introduction ==
+This is a new page created as an example.
+
+== Section 1 ==
+Content for section 1.
+
+[[Category:Example Pages]]
+"""
+
+# Create the page
+success = page.Create(
+    text=text,
+    summary="Created new example page"
+)
+
+if success:
+    print("Page created successfully")
+else:
+    print("Page creation failed")
+
+````
+
+
+## Example 3: Formatting Templates in a Page
+```` python
+
+from newapi.page import MainPage
+import wikitextparser as wtp
+
+# Create a page instance
+page = MainPage("Template:Example", "en", family="wikipedia")
+
+# Get the current text
+text = page.get_text()
+
+# Format all templates in the page
+newtext = text
+parsed = wtp.parse(text)
+templates = parsed.templates
+
+for template in templates:
+    original_text = template.string
+    formatted_text = template.pformat(" ")  # Format with spaces
+    newtext = newtext.replace(original_text, formatted_text)
+
+# Save the changes
+success = page.save(
+    newtext=newtext,
+    summary="Formatted templates",
+    minor="1"
+)
 
 ````
