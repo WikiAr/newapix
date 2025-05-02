@@ -272,8 +272,3 @@ for title in template_pages:
         if new_text != text:
             page.save(newtext=new_text, summary="Updated outdated template to update template with date")
 ````
-
-## Finding Uncategorized Articles
-```` python
-
-````
