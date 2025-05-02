@@ -1,15 +1,5 @@
 Python module for Wikimedia API:
 
-# Login Module
-```` python
-from newapi import super_login
-
-bot   = Login(lang, family='wikipedia')
-# ---
-bot.add_User_tables('wikipedia', {'username': '', 'password': ''})
-
-# json1 = bot.post(params, Type='post', addtoken=False)
-````
 ----
 # Newapi.page Module:
 
@@ -17,17 +7,23 @@ bot.add_User_tables('wikipedia', {'username': '', 'password': ''})
 ```` python
 # ---
 from newapi.page import MainPage
-page      = MainPage(title, 'ar', family='wikipedia')
+page      = MainPage('Article title', 'ar', family='wikipedia')
 # ---
-exists    = page.exists()
-if not exists: return
+# Check if the page exists
+if not page.exists():
+    print("Page doesn't exist")
+    return
 # ---
-page_edit = page.can_edit(script='')
-if not page_edit: return
+if not page.can_edit(script='fixref|cat|stub|tempcat|portal'):
+    return
 # ---
-if page.isRedirect() :  return
-if page.isDisambiguation() :  return
-# target = page.get_redirect_target()
+if page.isRedirect() :
+    target = page.get_redirect_target()
+    print("Page isRedirect")    
+    return
+# ---
+if page.isDisambiguation():
+    return
 # ---
 text        = page.get_text()
 ns          = page.namespace()
@@ -39,8 +35,6 @@ refs        = page.Get_tags(tag='ref')# for x in ref: name, contents = x.name, x
 words       = page.get_words()
 templates   = page.get_templates()
 temps_API   = page.get_templates_API()
-save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
-create      = page.Create(text='', summary='')
 # ---
 extlinks    = page.get_extlinks()
 back_links  = page.page_backlinks()
@@ -52,12 +46,18 @@ user        = page.get_user()
 userinfo    = page.get_userinfo() # "id", "name", "groups"
 revisions   = page.get_revisions(rvprops=['content'])
 purge       = page.purge()
+# ---
+save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
+create      = page.Create(text='', summary='')
+
 ````
 ## CatDepth
 
 ```` python
 from newapi.page import CatDepth
-cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], tempyes=[])
+
+cat_members = CatDepth("Category title", sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], tempyes=[])
+
 ````
 ## NEW_API
 
@@ -70,15 +70,29 @@ api_new = NEW_API('en', family='wikipedia')
 # Login to the wiki
 api_new.Login_to_wiki()
 
-# Now you can perform API operations
+# get list of pages:
 all_pages = api.Get_All_pages(namespace="0", limit="max")
-
-json1    = api_new.post_params(params, addtoken=False)
-pages    = api_new.Find_pages_exists_or_not(liste)
 pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
 search   = api_new.Search(value='', ns="", offset='', srlimit="max", RETURN_dict=False, addparams={})
 newpages = api_new.Get_Newpages(limit="max", namespace="0", rcstart="", user='', three_houers=False)
 usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
+
+# Process each page
+for title in newpages:
+    page = MainPage(title, 'en', family='wikipedia')
+    
+    # Skip redirects and non-existent pages
+    if not page.exists() or page.isRedirect():
+        continue
+        
+    # Get page content
+    text = page.get_text()
+    
+    # Process the page as needed
+    # ...
+
+json1    = api_new.post_params(params, addtoken=False)
+pages    = api_new.Find_pages_exists_or_not(titles)
 l_links  = api_new.Get_langlinks_for_list(titles, targtsitecode="", numbes=50)
 text_w   = api_new.expandtemplates(text)
 subst    = api_new.Parse_Text('{{subst:page_name}}', title)
