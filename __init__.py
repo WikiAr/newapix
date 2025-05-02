@@ -1,26 +1,36 @@
 # -*- coding: utf-8 -*-
+"""
 
-from .super import super_login
+match long ref:
+    <ref[^>]*>[^<>]+<\/ref>
 
-# from . import mdwiki_page, ncc_page, wiki_page
-# from . import toolforge_page
-from . import page, printe
-from . import db_bot, except_err, botEdit, pymysql_bot, txtlib, wd_sparql, user_account_new, useraccount
+short ref:
+    <ref[^>/]*\s*/\s*>
 
-__all__ = [
-    "super_login",
-    "useraccount",
-    "user_account_new",
-    "wd_sparql",
-    "txtlib",
-    "pymysql_bot",
-    "botEdit",
-    "except_err",
-    "db_bot",
-    "printe",
-    # "toolforge_page",
-    "page",
-    # "wiki_page",
-    # "ncc_page",
-    # "mdwiki_page",
-]
+
+page_edit = page.can_edit()
+if not page_edit: return
+# ---
+if page.isRedirect() :  return
+# target = page.get_redirect_target()
+# ---
+text        = page.get_text()
+ns          = page.namespace()
+links       = page.page_links()
+categories  = page.get_categories(with_hidden=False)
+langlinks   = page.get_langlinks()
+wiki_links  = page.get_wiki_links_from_text()
+refs        = page.Get_tags(tag='ref')# for x in ref: name, contents = x.name, x.contents
+words       = page.get_words()
+templates   = page.get_templates()
+save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
+create      = page.Create(text='', summary='')
+# ---
+back_links  = page.page_backlinks()
+text_html   = page.get_text_html()
+hidden_categories= page.get_hidden_categories()
+flagged     = page.is_flagged()
+timestamp   = page.get_timestamp()
+user        = page.get_user()
+purge       = page.purge()
+"""
