@@ -4,8 +4,8 @@ bot_edit!
 #
 #
 import sys
-from newapi import printe
-from newapi import txtlib
+from . import printe
+from . import txtlib
 
 # ---
 edit_username = {1: "Mr.Ibrahembot"}
@@ -72,11 +72,12 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
                     return False
                 elif params.get("1"):
                     List = [x.strip() for x in params.get("1", "").split(",")]
-                    # if 'all' in List or printe.calledModuleName() in List or edit_username[1] in List:
+                    # if 'all' in List or pywikibot.calledModuleName() in List or edit_username[1] in List:
                     if "all" in List or edit_username[1] in List:
                         printe.output(f"<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.")
                         # printe.output( 'return False 3 ' )
-                        Bot_Cash[title_page] = False
+                        # Bot_Cash[title_page] = False
+                        Bot_Cash[botjob][title_page] = False
                         return False
             # ---
             # {{bots|allow=<botlist>}}  منع جميع البوتات غير الموجودة في القائمة
@@ -133,6 +134,10 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
     Bot_Cash[botjob][title_page] = True
     # ---
     return True
+
+
+def botMayEdit(**kwargs):
+    return bot_May_Edit(**kwargs)
 
 
 # ---

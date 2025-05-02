@@ -46,9 +46,9 @@ import time
 import sys
 import datetime
 from datetime import timedelta
-from newapi import printe
-from newapi.super.botapi_bots.bot import BOTS_APIS
-from newapi.super.super_login import Login
+from .. import printe
+from .botapi_bots.bot import BOTS_APIS
+from .super_login import Login
 
 change_codes = {
     "bat_smg": "bat-smg",

@@ -4,8 +4,8 @@ from newapi.super.botapi_bots.bot import BOTS_APIS
 
 """
 import sys
-from newapi import printe
-from newapi.super.bots.handel_errors import HANDEL_ERRORS
+from ... import printe
+from ..bots.handel_errors import HANDEL_ERRORS
 
 yes_answer = ["y", "a", "", "Y", "A", "all", "aaa"]
 Save_Edit_Pages = {1: False}
@@ -36,7 +36,8 @@ class BOTS_APIS(HANDEL_ERRORS):
                     printe.output(f"diference in bytes: {len(newtext) - len(text)}")
                     printe.output(f"length of text: {len(text)}, length of newtext: {len(newtext)}")
             # ---
-            sa = input(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
+            printe.output(f"<<lightyellow>>bot_api.py: save (yes, no)? {self.username=}")
+            sa = input("([y]es, [N]o, [a]ll)?")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")
@@ -131,7 +132,8 @@ class BOTS_APIS(HANDEL_ERRORS):
             return False
         # ---
         if not self.save_move and "ask" in sys.argv:
-            sa = input(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? ([y]es, [N]o, [a]ll)? {self.username=}")
+            printe.output(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? {self.username=}")
+            sa = input("([y]es, [N]o, [a]ll)?")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")
