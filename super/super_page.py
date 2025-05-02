@@ -48,14 +48,14 @@ import os
 from warnings import warn
 import sys
 import wikitextparser as wtp
-from .. import printe
-from .. import txtlib
-from .. import botEdit
+from newapi import printe
+from newapi import txtlib
+from newapi import botEdit
 
-from .page_bots.ar_err import find_edit_error
-from .page_bots.bot import APIS
-from .super_login import Login
-from ..except_err import exception_err, warn_err
+from newapi.super.page_bots.ar_err import find_edit_error
+from newapi.super.page_bots.bot import APIS
+from newapi.super.super_login import Login
+from newapi.except_err import exception_err, warn_err
 
 file_name = os.path.basename(__file__)
 

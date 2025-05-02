@@ -4,8 +4,8 @@ bot_edit!
 #
 #
 import sys
-from . import printe
-from . import txtlib
+from newapi import printe
+from newapi import txtlib
 
 # ---
 edit_username = {1: "Mr.Ibrahembot"}

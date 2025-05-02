@@ -3,7 +3,7 @@ from newapi.super.bots.handel_errors import HANDEL_ERRORS
 
 """
 import sys
-from ... import printe
+from newapi import printe
 
 
 class HANDEL_ERRORS:
