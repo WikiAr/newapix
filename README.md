@@ -33,32 +33,82 @@ if page.isDisambiguation():
 text = page.get_text()
 namespace = page.namespace()
 timestamp = page.get_timestamp()
-user = page.get_user()
-userinfo    = page.get_userinfo() # "id", "name", "groups"
 word_count = page.get_words()
 
-# templates
+````
+
+### User Information
+To get information about the user who last edited the page:
+```` python
+# Get username
+username = page.get_user()
+
+# Get detailed user information
+userinfo = page.get_userinfo()  # Returns dict with "id", "name", "groups"
+
+````
+
+### Templates
+Two methods are available for retrieving templates used in a page:
+- The get_templates() method returns a more detailed structure that includes template parameters, using the txtlib.extract_templates_and_params() function.
+
+```` python
+# Get templates with parameters via text parsing
 templates = page.get_templates()
 for temp in temps:
     name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
 
-# Get links and categories
-categories = page.get_categories(with_hidden=False)
+# Get templates via API (returns list of template titles)
+templates_api = page.get_templates_API()
+for temp in templates_api:
+    print(temp)
+````
+
+### Categories
+To retrieve the categories a page belongs to:
+```` python
+# Get regular categories
+categories = page.get_categories()
+
+# Get hidden categories
 hidden_categories = page.get_hidden_categories()
 
-templates_api = page.get_templates_API()
-langlinks = page.get_langlinks()
-extlinks = page.get_extlinks()
+# Get all categories including hidden ones
+all_categories = page.get_categories(with_hidden=True)
+````
+### Links
+```` python
+# Get wiki links (internal links)
 wiki_links = page.get_wiki_links_from_text()
+
+# Get language links (interwiki links)
+lang_links = page.get_langlinks()
+
+# Get external links
+ext_links = page.get_extlinks()
+
+# Get pages linking to this page
+links_here = page.get_links_here()
+
 back_links = page.page_backlinks()
-links       = page.page_links()
+
+links = page.page_links()
+
+````
+### HTML Tags
+```` python
+# Get specific elements from the page
+references = page.Get_tags(tag='ref')
+for x in references:
+    name, contents = x.name, x.contents
+
+````
+
+### Others
+```` python
 
 # Get page HTML representation
 text_html = page.get_text_html()
-
-# Get specific elements from the page
-references = page.Get_tags(tag='ref')
-# for x in ref: name, contents = x.name, x.contents
 
 # ---
 flagged     = page.is_flagged()
