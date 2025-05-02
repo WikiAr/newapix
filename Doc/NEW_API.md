@@ -6,7 +6,7 @@ The NEW_API class provides a robust, high-level interface to the MediaWiki API, 
 ### list of pages
 
 ```` python
-from newapi.page import NEW_API
+from newapi.page import NEW_API, MainPage
 
 # Initialize API with language and family
 api = NEW_API('en', family='wikipedia')
