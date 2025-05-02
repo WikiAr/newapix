@@ -1,17 +1,19 @@
 Python module for Wikimedia API:
 
-### Login.
-
+# Login Module
 ```` python
 from newapi import super_login
 
 bot   = Login(lang, family='wikipedia')
 # ---
 bot.add_User_tables('wikipedia', {'username': '', 'password': ''})
-json1 = bot.post(params, Type='post', addtoken=False)
-````
-### Pages.
 
+# json1 = bot.post(params, Type='post', addtoken=False)
+````
+----
+# Newapi.page Module:
+
+## MainPage
 ```` python
 # ---
 from newapi.page import MainPage
@@ -51,24 +53,26 @@ userinfo    = page.get_userinfo() # "id", "name", "groups"
 revisions   = page.get_revisions(rvprops=['content'])
 purge       = page.purge()
 ````
-
-### Categories.
+## CatDepth
 
 ```` python
 from newapi.page import CatDepth
 cat_members = CatDepth(title, sitecode='en', family="wikipedia", depth=0, ns="all", nslist=[], tempyes=[])
 ````
-### Templates.
-
-```` python
-
-````
-### API Actions.
+## NEW_API
 
 ```` python
 from newapi.page import NEW_API
-api_new  = NEW_API('www', family='nccommons')
-login    = api_new.Login_to_wiki()
+
+# Initialize API with language and family
+api_new = NEW_API('en', family='wikipedia')
+
+# Login to the wiki
+api_new.Login_to_wiki()
+
+# Now you can perform API operations
+all_pages = api.Get_All_pages(namespace="0", limit="max")
+
 json1    = api_new.post_params(params, addtoken=False)
 pages    = api_new.Find_pages_exists_or_not(liste)
 pages    = api_new.Get_All_pages(start='', namespace="0", limit="max", apfilterredir='', limit_all=0)
@@ -82,4 +86,3 @@ extlinks = api_new.get_extlinks(title)
 revisions= api_new.get_revisions(title)
 
 ````
-
