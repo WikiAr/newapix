@@ -1,5 +1,15 @@
 Python module for Wikimedia API:
 
+# Login Module
+```` python
+from newapi import super_login
+
+bot   = Login(lang, family='wikipedia')
+# ---
+bot.add_User_tables('wikipedia', {'username': '', 'password': ''})
+
+# json1 = bot.post(params, Type='post', addtoken=False)
+````
 ----
 # Newapi.page Module:
 
@@ -19,7 +29,7 @@ if not page.can_edit(script='fixref|cat|stub|tempcat|portal'):
 # ---
 if page.isRedirect() :
     target = page.get_redirect_target()
-    print("Page isRedirect")    
+    print("Page isRedirect")
     return
 # ---
 if page.isDisambiguation():
@@ -80,14 +90,14 @@ usercont = api_new.UserContribs(user, limit=5000, namespace="*", ucshow="")
 # Process each page
 for title in newpages:
     page = MainPage(title, 'en', family='wikipedia')
-    
+
     # Skip redirects and non-existent pages
     if not page.exists() or page.isRedirect():
         continue
-        
+
     # Get page content
     text = page.get_text()
-    
+
     # Process the page as needed
     # ...
 
