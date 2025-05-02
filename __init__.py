@@ -2,8 +2,8 @@
 
 from .super import super_login
 
-from . import mdwiki_page, ncc_page, wiki_page
-from . import toolforge_page
+# from . import mdwiki_page, ncc_page, wiki_page
+# from . import toolforge_page
 from . import page, printe
 from . import db_bot, except_err, botEdit, pymysql_bot, txtlib, wd_sparql, user_account_new, useraccount
 
