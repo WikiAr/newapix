@@ -50,7 +50,7 @@ Two methods are available for retrieving templates used in a page:
 ```` python
 # Get templates with parameters via text parsing
 templates = page.get_templates()
-for temp in temps:
+for temp in templates:
     name, namestrip, params, template = temp['name'], temp['namestrip'], temp['params'], temp['item']
 
 # Get templates via API (returns list of template titles)
