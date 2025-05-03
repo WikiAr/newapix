@@ -4,8 +4,8 @@ import configparser
 
 home_dir = os.getenv("HOME")
 # ---
-if home_dir and os.path.isdir(home_dir):
-    project = home_dir
+if home_dir:
+    project = "/data/project/himo"
 else:
     project = 'I:/core/bots/core1'
 # ---
