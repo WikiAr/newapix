@@ -302,8 +302,7 @@ class CategoryDepth(Login, BOTS_APIS):
 
     def subcatquery_(self):
         # ---
-        if self.print_s:
-            print(f"catdepyh_new.py cat:{self.title}, ns:{self.ns}")
+        # if self.print_s: print(f"catdepyh_new.py cat:{self.title}, ns:{self.ns}")
         # ---
         tablemember = self.get_cat_new(self.title)
         # ---
