@@ -156,7 +156,7 @@ def check_last_edit_time(page, title_page, delay):
         printe.output(f"<<grey>> last-edit Δ={diff_minutes:.2f} min for {title_page}")
         # ---
         if diff_minutes < delay:
-            printe.output(f"page:{title_page} Last edit was less than {delay} minutes ago, wait {diff_minutes:.2f} minutes.")
+            printe.output(f"page:{title_page} Last edit was less than {delay} minutes ago, wait {delay-diff_minutes:.2f} minutes.")
             return False
     # ---
     return True
@@ -169,8 +169,9 @@ def bot_May_Edit(text="", title_page="", botjob="all", page=False, delay=0):
     if page and delay and isinstance(delay, int) and check_it:
         # ---
         ns = page.namespace()
+        lang = page.lang
         # ---
-        if ns != 0 :
+        if ns != 0 or lang != "ar":
             return check_it
         # ---
         check_time = check_last_edit_time(page, title_page, delay)
