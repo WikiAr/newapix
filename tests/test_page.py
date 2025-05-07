@@ -11,13 +11,12 @@ from newapi.page import MainPage
 pageen = MainPage("User:Mr. Ibrahem/sandbox", 'en')
 page = MainPage("وب:ملعب", "ar")
 # ---
-existsen	  = pageen.exists()
+existsen = pageen.exists()
+
+if not page.can_edit():
+    print("page can't edit!")
+# ---
 """
-if not exists: return
-# ---
-page_edit = page.can_edit()
-if not page_edit: return
-# ---
 if page.isRedirect() :	return
 # target = page.get_redirect_target()
 # ---
@@ -65,4 +64,3 @@ save = page.save(newtext=newtext)
 
 
 pageen.save(newtext="!!!")
-

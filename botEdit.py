@@ -3,6 +3,7 @@ bot_edit!
 """
 #
 #
+import datetime
 import sys
 from newapi import printe
 from newapi import txtlib
@@ -25,7 +26,7 @@ stop_edit_temps = {
 }
 
 
-def bot_May_Edit(text="", title_page="", botjob="all"):
+def bot_May_Edit_do(text="", title_page="", botjob="all"):
     # ---
     if ("botedit" in sys.argv or "editbot" in sys.argv) or "workibrahem" in sys.argv:
         return True
@@ -134,6 +135,51 @@ def bot_May_Edit(text="", title_page="", botjob="all"):
     Bot_Cash[botjob][title_page] = True
     # ---
     return True
+
+
+def check_last_edit_time(page, title_page, delay):
+    # ---
+    diff_minutes = False
+    # ---
+    userinfo = page.get_userinfo()
+    # ---
+    if "bot" in userinfo.get("groups", []):
+        return True
+    # ---
+    # example: 2025-05-07T12:00:17Z
+    timestamp = page.get_timestamp()
+    # ---
+    if timestamp:
+        now = datetime.datetime.now(datetime.timezone.utc)
+        ts_time = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+        # ---
+        diff_minutes = (now - ts_time).total_seconds() / 60
+        # ---
+        print(f"{diff_minutes=:.2f}")
+    # ---
+    if diff_minutes and diff_minutes < delay:
+        printe.output(f"page:{title_page} Last edit was less than {delay} minutes ago, wait {diff_minutes:.2f} minutes.")
+        return False
+    # ---
+    return True
+
+
+def bot_May_Edit(text="", title_page="", botjob="all", page=False, delay=0):
+    # ---
+    check_it = bot_May_Edit_do(text=text, title_page=title_page, botjob=botjob)
+    # ---
+    if page and delay and isinstance(delay, int) and check_it:
+        # ---
+        ns = page.namespace()
+        # ---
+        if ns != 0 :
+            return check_it
+        # ---
+        check_time = check_last_edit_time(page, title_page, delay)
+        # ---
+        return check_time
+    # ---
+    return check_it
 
 
 def botMayEdit(**kwargs):
