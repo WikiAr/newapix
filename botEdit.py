@@ -139,8 +139,6 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
 
 def check_last_edit_time(page, title_page, delay):
     # ---
-    diff_minutes = False
-    # ---
     userinfo = page.get_userinfo()
     # ---
     if "bot" in userinfo.get("groups", []):
@@ -155,11 +153,11 @@ def check_last_edit_time(page, title_page, delay):
         # ---
         diff_minutes = (now - ts_time).total_seconds() / 60
         # ---
-        print(f"{diff_minutes=:.2f}")
-    # ---
-    if diff_minutes and diff_minutes < delay:
-        printe.output(f"page:{title_page} Last edit was less than {delay} minutes ago, wait {diff_minutes:.2f} minutes.")
-        return False
+        printe.output(f"<<grey>> last-edit Δ={diff_minutes:.2f} min for {title_page}")
+        # ---
+        if diff_minutes < delay:
+            printe.output(f"page:{title_page} Last edit was less than {delay} minutes ago, wait {diff_minutes:.2f} minutes.")
+            return False
     # ---
     return True
 
