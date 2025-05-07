@@ -106,7 +106,7 @@ class BOTS_APIS(HANDEL_ERRORS):
         # ---
         return True
 
-    def move(self, old_title, to, reason="", noredirect=False, movesubpages=False):
+    def move(self, old_title, to, reason="", noredirect=False, movesubpages=False, return_dict=False):
         # ---
         printe.output(f"<<lightyellow>> def move [[{old_title}]] to [[{to}]] ")
         # ---
@@ -129,7 +129,7 @@ class BOTS_APIS(HANDEL_ERRORS):
         # ---
         if old_title == to:
             test_print(f"<<lightred>>** old_title == to {to} ")
-            return False
+            return {}
         # ---
         if not self.save_move and "ask" in sys.argv:
             printe.output(f"<<lightyellow>>bot_api: Do you move page:[[{old_title}]] to [[{to}]]? {self.username=}")
@@ -143,7 +143,7 @@ class BOTS_APIS(HANDEL_ERRORS):
             # ---
             if sa not in yes_answer:
                 printe.output("<<red>> bot_api: wrong answer")
-                return False
+                return {}
             # ---
             test_print(f"<<lightgreen>> answer: {sa in yes_answer}")
         # ---
@@ -152,7 +152,7 @@ class BOTS_APIS(HANDEL_ERRORS):
         # ---
         if not data:
             printe.output("no data")
-            return ""
+            return {}
         # ---
         _expend_data = {
             "move": {
@@ -175,12 +175,16 @@ class BOTS_APIS(HANDEL_ERRORS):
         # ---
         if move_done:
             printe.output("<<lightgreen>>** true.")
+            # ---
+            if return_dict:
+                return move_done
+            # ---
             return True
         # ---
         if error:
             if error_code == "ratelimited":
                 printe.output("<<red>> move ratelimited:")
-                return self.move(old_title, to, reason=reason, noredirect=noredirect, movesubpages=movesubpages)
+                return self.move(old_title, to, reason=reason, noredirect=noredirect, movesubpages=movesubpages, return_dict=return_dict)
 
             if error_code == "articleexists":
                 printe.output("<<red>> articleexists")
@@ -189,9 +193,9 @@ class BOTS_APIS(HANDEL_ERRORS):
             printe.output("<<red>> error")
             printe.output(error)
 
-            return False
+            return {}
         # ---
-        return False
+        return {}
 
     def expandtemplates(self, text):
         # ---

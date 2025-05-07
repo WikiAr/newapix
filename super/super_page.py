@@ -597,7 +597,7 @@ class MainPage(Login, APIS):
         # ---
         return new_tags
 
-    def can_edit(self, script=""):
+    def can_edit(self, script="", delay=0):
         # ---
         if self.family != "wikipedia":
             return True
@@ -605,7 +605,7 @@ class MainPage(Login, APIS):
         if not self.text:
             self.text = self.get_text()
         # ---
-        self.can_be_edit = botEdit.bot_May_Edit(text=self.text, title_page=self.title, botjob=script)
+        self.can_be_edit = botEdit.bot_May_Edit(text=self.text, title_page=self.title, botjob=script, page=self, delay=delay)
         # ---
         return self.can_be_edit
 
@@ -672,7 +672,10 @@ class MainPage(Login, APIS):
         if summary:
             self.summary = summary
         # ---
-        if self.false_edit():
+        if self.ns is False or self.ns != 0:
+            return False
+        # ---
+        if "nofa" in sys.argv:
             return False
         # ---
         ask = self.ask_put(nodiff=nodiff, ASK=ASK)
