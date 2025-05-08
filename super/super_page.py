@@ -31,6 +31,8 @@ temps_API   = page.get_templates_API()
 save_page   = page.save(newtext='', summary='', nocreate=1, minor='')
 create      = page.Create(text='', summary='')
 # ---
+create_data = page.get_create_data() # { "timestamp" : "", "user" : "", "anon" : "" }
+# ---
 extlinks    = page.get_extlinks()
 back_links  = page.page_backlinks()
 text_html   = page.get_text_html()
@@ -126,12 +128,15 @@ class MainPage(Login, APIS):
         self.text = ""
         self.text_html = ""
         # ---
+        self.touched = ""
         self.revid = ""
         self.newrevid = ""
         # ---
         self.pageid = ""
-        self.timestamp = ""
         self.user = ""
+        # ---
+        self.create_data = {}
+        self.timestamp = ""
         # ---
         self.revisions = []
         self.back_links = []
@@ -182,7 +187,8 @@ class MainPage(Login, APIS):
             # ---
             printe.output(Edit_summary_line[1] % self.summary)
             # ---
-            sa = input(f"<<lightyellow>>page.py: Do you want to accept these changes? (yes, no): for page {self.lang}:{self.title}? {self.username=}")
+            printe.output(f"<<lightyellow>>page.py: Do you want to accept these changes? (yes, no): for page {self.lang}:{self.title}? {self.username=}")
+            sa = input("([y]es, [N]o, [a]ll)?")
             # ---
             if sa == "a":
                 printe.output("<<lightgreen>> ---------------------------------")
@@ -200,7 +206,10 @@ class MainPage(Login, APIS):
         # self.newtext
         # self.text
         # ---
-        if self.ns != 0 or "nofa" in sys.argv:
+        if self.ns is False or self.ns != 0:
+            return False
+        # ---
+        if "nofa" in sys.argv:
             return False
         # ---
         if not self.text:
@@ -236,6 +245,37 @@ class MainPage(Login, APIS):
         printe.output(f"<<lightgreen>> imported {done} revisions")
         # ---
         return data
+
+    def find_create_data(self):
+        params = {
+            "action": "query",
+            "format": "json",
+            "prop": "revisions",
+            "titles": self.title,
+            "rvprop": "timestamp|ids|user",
+            "rvslots": "*",
+            "rvlimit": "1",
+            "rvdir": "newer"
+        }
+        # ---
+        data = self.post_params(params)
+        # ---
+        pages = data.get("query", {}).get("pages", {})
+        # ---
+        for _, v in pages.items():
+            # ---
+            page_data = v.get("revisions", [{}])[0]
+            # ---
+            if "parentid" in page_data and page_data["parentid"] == 0:
+                self.create_data = {
+                    "timestamp" : page_data["timestamp"],
+                    "user" : page_data.get("user", ""),
+                    "anon" : page_data.get("anon", False),
+                }
+            # ---
+            break
+        # ---
+        return self.create_data
 
     def get_text(self, redirects=False):
         params = {
@@ -279,13 +319,20 @@ class MainPage(Login, APIS):
             # ---
             self.pageid = v.get("pageid") or self.pageid
             # ---
-            page = v.get("revisions", [{}])[0]
+            page_data = v.get("revisions", [{}])[0]
             # ---
-            self.text = page.get("slots", {}).get("main", {}).get("*", "")
-            self.user = page.get("user") or self.user
-            self.revid = page.get("revid") or self.revid
+            self.text = page_data.get("slots", {}).get("main", {}).get("*", "")
+            self.user = page_data.get("user") or self.user
+            self.revid = page_data.get("revid") or self.revid
             # ---
-            self.timestamp = page.get("timestamp") or self.timestamp
+            self.timestamp = page_data.get("timestamp") or self.timestamp
+            # ---
+            if "parentid" in page_data and page_data["parentid"] == 0:
+                self.create_data = {
+                    "timestamp" : page_data["timestamp"],
+                    "user" : page_data.get("user", ""),
+                    "anon" : page_data.get("anon", False),
+                }
             # ---
             break
         # ---
@@ -333,10 +380,14 @@ class MainPage(Login, APIS):
         # ---
         # for _, ta in pages.items():
         # ---
-        self.ns = ta.get("ns") or self.ns
+        # self.ns = ta.get("ns") or self.ns
+        if "ns" in ta:
+            self.ns = ta["ns"]  # ns = 0 !
+        # ---
         self.pageid = ta.get("pageid") or self.pageid
         self.length = ta.get("length") or self.length
         self.revid = ta.get("lastrevid") or self.revid
+        self.touched = ta.get("touched") or self.touched
         # ---
         self.is_redirect = True if "redirect" in ta else False
         # ---
@@ -616,6 +667,11 @@ class MainPage(Login, APIS):
         # ---
         return self.flagged
 
+    def get_create_data(self):
+        if not self.create_data:
+            self.find_create_data()
+        return self.create_data
+
     def get_timestamp(self):
         if not self.timestamp:
             self.get_text()
@@ -672,10 +728,7 @@ class MainPage(Login, APIS):
         if summary:
             self.summary = summary
         # ---
-        if self.ns is False or self.ns != 0:
-            return False
-        # ---
-        if "nofa" in sys.argv:
+        if self.false_edit():
             return False
         # ---
         ask = self.ask_put(nodiff=nodiff, ASK=ASK)
@@ -725,6 +778,7 @@ class MainPage(Login, APIS):
             self.pageid = edit.get("pageid") or self.pageid
             self.revid = edit.get("newrevid") or self.revid
             self.newrevid = edit.get("newrevid") or self.newrevid
+            self.touched = edit.get("touched") or self.touched
             self.timestamp = edit.get("newtimestamp") or self.timestamp
             # ---
             return True
@@ -815,6 +869,7 @@ class MainPage(Login, APIS):
             # ---
             self.pageid = edit.get("pageid") or self.pageid
             self.revid = edit.get("newrevid") or self.revid
+            self.touched = edit.get("touched") or self.touched
             self.newrevid = edit.get("newrevid") or self.newrevid
             self.timestamp = edit.get("newtimestamp") or self.timestamp
             # ---
