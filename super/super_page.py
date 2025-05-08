@@ -380,7 +380,10 @@ class MainPage(Login, APIS):
         # ---
         # for _, ta in pages.items():
         # ---
-        self.ns = ta.get("ns") or self.ns
+        # self.ns = ta.get("ns") or self.ns
+        if "ns" in ta:
+            self.ns = ta["ns"]  # ns = 0 !
+        # ---
         self.pageid = ta.get("pageid") or self.pageid
         self.length = ta.get("length") or self.length
         self.revid = ta.get("lastrevid") or self.revid

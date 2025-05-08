@@ -162,7 +162,7 @@ def check_create_time(page, title_page):
     # ---
     create_data = page.get_create_data()  # { "timestamp" : "2025-05-07T12:00:17Z", "user" : "", "anon" : "" }
     # ---
-    delay = 3
+    delay_hours = 3
     # ---
     if create_data.get("timestamp"):
         # ---
@@ -173,9 +173,9 @@ def check_create_time(page, title_page):
         # ---
         user = create_data.get("user", "")
         # ---
-        wait_time = delay - diff
+        wait_time = delay_hours - diff
         # ---
-        if diff < delay:
+        if diff < delay_hours:
             printe.output(f"<<yellow>>Page:{title_page} create at ({create_time}).")
             printe.output(f"<<invert>>Page Created before {diff:.2f} hours by: {user}, wait {wait_time:.2f}H.")
             return False
