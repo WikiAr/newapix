@@ -725,10 +725,7 @@ class MainPage(Login, APIS):
         if summary:
             self.summary = summary
         # ---
-        if self.ns is False or self.ns != 0:
-            return False
-        # ---
-        if "nofa" in sys.argv:
+        if self.false_edit():
             return False
         # ---
         ask = self.ask_put(nodiff=nodiff, ASK=ASK)
