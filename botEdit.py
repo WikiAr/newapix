@@ -11,7 +11,8 @@ from newapi import txtlib
 # ---
 edit_username = {1: "Mr.Ibrahembot"}
 # ---
-Bot_Cash = {}
+Bot_Cache = {}
+Created_Cache = {}
 # ---
 stop_edit_temps = {
     "all": ["تحرر", "قيد التطوير", "يحرر"],
@@ -34,11 +35,11 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
     if botjob in ["", "fixref|cat|stub|tempcat|portal"]:
         botjob = "all"
     # ---
-    if botjob not in Bot_Cash:
-        Bot_Cash[botjob] = {}
+    if botjob not in Bot_Cache:
+        Bot_Cache[botjob] = {}
     # ---
-    if title_page in Bot_Cash[botjob]:
-        return Bot_Cash[botjob][title_page]
+    if title_page in Bot_Cache[botjob]:
+        return Bot_Cache[botjob][title_page]
     # ---
     templates = txtlib.extract_templates_and_params(text)
     # ---
@@ -54,7 +55,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
         # ---
         if title in restrictions or title in all_stop:
             printe.output(f"<<lightred>> botEdit.py: the page has temp:({title}), botjob:{botjob} skipp.")
-            Bot_Cash[botjob][title_page] = False
+            Bot_Cache[botjob][title_page] = False
             return False
         # ---
         # if title == 'Nobots' or title == 'nobots':
@@ -69,7 +70,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                 if not params:
                     printe.output(f"<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.")
                     # printe.output( 'return False 2 ' )
-                    Bot_Cash[botjob][title_page] = False
+                    Bot_Cache[botjob][title_page] = False
                     return False
                 elif params.get("1"):
                     List = [x.strip() for x in params.get("1", "").split(",")]
@@ -77,8 +78,8 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                     if "all" in List or edit_username[1] in List:
                         printe.output(f"<<lightred>> botEdit.py: the page has temp:({_template}), botjob:{botjob} skipp.")
                         # printe.output( 'return False 3 ' )
-                        # Bot_Cash[title_page] = False
-                        Bot_Cash[botjob][title_page] = False
+                        # Bot_Cache[title_page] = False
+                        Bot_Cache[botjob][title_page] = False
                         return False
             # ---
             # {{bots|allow=<botlist>}}  منع جميع البوتات غير الموجودة في القائمة
@@ -88,7 +89,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                 # printe.output( 'title == (%s) ' % title )
                 # {{bots}}                  السماح لجميع البوتات
                 if not params:
-                    Bot_Cash[botjob][title_page] = False
+                    Bot_Cache[botjob][title_page] = False
                     return False
                 else:
                     printe.output(f"botEdit.py title:({title}), params:({str(params)}).")
@@ -108,7 +109,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                             printe.output(f"<<lightred>>botEdit.py Template:({title}) has |allow={','.join(value)}.")
                         else:
                             printe.output(f"<<lightgreen>>botEdit.py Template:({title}) has |allow={','.join(value)}.")
-                        Bot_Cash[botjob][title_page] = sd
+                        Bot_Cache[botjob][title_page] = sd
                         return sd
                         # ---
                     # ---
@@ -121,7 +122,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                         sd = "all" not in value and edit_username[1] not in value
                         if not sd:
                             printe.output(f"<<lightred>>botEdit.py Template:({title}) has |deny={','.join(value)}.")
-                        Bot_Cash[botjob][title_page] = sd
+                        Bot_Cache[botjob][title_page] = sd
                         return sd
                     # ---
                     # ---
@@ -132,7 +133,7 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
                     # ---
     # ---
     # no restricting template found
-    Bot_Cash[botjob][title_page] = True
+    Bot_Cache[botjob][title_page] = True
     # ---
     return True
 
@@ -140,9 +141,17 @@ def bot_May_Edit_do(text="", title_page="", botjob="all"):
 def check_create_time(page, title_page):
     # ---
     """
-
+    This function checks the namespace and language of the page. If the
+    namespace is not 0 or the language is not "ar", it returns True.
+    Otherwise, it calculates the time difference between the current time
+    and the page's creation timestamp. If the page was created less than
+    a specified delay (in hours) ago, it logs a message and returns False.
+    If no creation timestamp is found, it returns True.
     """
-
+    # ---
+    if title_page in Created_Cache:
+        return Created_Cache[title_page]
+    # ---
     ns = page.namespace()
     lang = page.lang
     # ---
@@ -162,7 +171,6 @@ def check_create_time(page, title_page):
         # ---
         diff = (now - ts_c_time).total_seconds() / (60 * 60)
         # ---
-        # ---
         user = create_data.get("user", "")
         # ---
         wait_time = delay - diff
@@ -177,6 +185,14 @@ def check_create_time(page, title_page):
 
 def check_last_edit_time(page, title_page, delay):
     # ---
+    """
+    This function checks the last edit time of a page. If the page has
+    been edited by a bot, it returns True. Otherwise, it calculates the
+    time difference between the current time and the page's last edit
+    timestamp. If the page was edited less than a specified delay (in
+    minutes) ago, it logs a message and returns False. If no last edit
+    timestamp is found, it returns True.
+    """
     userinfo = page.get_userinfo()
     # ---
     if "bot" in userinfo.get("groups", []):
@@ -206,6 +222,12 @@ def check_last_edit_time(page, title_page, delay):
 
 def bot_May_Edit(text="", title_page="", botjob="all", page=False, delay=0):
     # ---
+    """
+    This function checks if a bot can edit a page. If the page is None, it
+    only checks if the page has a specific template. If the page is not None,
+    it also checks if the page was edited too recently and if the page was
+    created too recently.
+    """
     check_it = bot_May_Edit_do(text=text, title_page=title_page, botjob=botjob)
     # ---
     if page and check_it:
@@ -224,6 +246,8 @@ def bot_May_Edit(text="", title_page="", botjob="all", page=False, delay=0):
                 return False
         # ---
         check_create = check_create_time(page, title_page)
+        # ---
+        Created_Cache[title_page] = check_create
         # ---
         if not check_create:
             return False
